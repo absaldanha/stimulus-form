@@ -1,0 +1,19 @@
+version: '2.4'
+
+services:
+  common: &common
+    build:
+      context: .
+      dockerfile: ./.dockerdev/Dockerfile.dev
+      args:
+        NODE_VERSION: '18'
+    image: stimulus-form:1.0.0
+    volumes:
+      - .:/app:cached
+    tmpfs:
+      - /tmp
+
+  app: &app
+    <<: *common
+    stdin_open: true
+    tty: true
