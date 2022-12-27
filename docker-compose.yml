@@ -6,7 +6,9 @@ services:
       context: .
       dockerfile: ./.dockerdev/Dockerfile.dev
       args:
+        RUBY_VERSION: '3.0.5'
         NODE_VERSION: '18'
+        YARN_VERSION: '1.22.19'
     image: stimulus-form:1.0.0
     volumes:
       - .:/app:cached
