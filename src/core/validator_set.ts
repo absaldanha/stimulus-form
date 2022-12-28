@@ -1,14 +1,15 @@
-import config from './config';
+import { FieldController }  from './field_controller';
+import { ValidationContext } from './validation_context';
+import { validatorRegistry } from './config';
+import { isPresent } from './helpers';
 
-import type { ValidationContext, Validator } from './types';
+import type { Validator } from './validators';
 
-const { validatorRegistry } = config;
-
-export default class ValidationSet {
-  public validators: Validator[];
+export class ValidatorSet {
+  readonly validators: Validator[];
 
   static buildFromString(validatorsString: string) {
-    const validatorsArray = validatorsString.split(' ');
+    const validatorsArray = validatorsString.split(' ').filter(isPresent);
 
     const validators = validatorsArray.map((validator) => {
       const [identifier, ...rest] = validator.split(':');
@@ -18,17 +19,14 @@ export default class ValidationSet {
       return new FetchedValidator(options);
     });
 
-    return new ValidationSet(validators);
+    return new ValidatorSet(validators);
   }
 
   constructor(validators?: Validator[]) {
     this.validators = validators || [];
   }
 
-  validate(value: unknown, context: ValidationContext) {
-    return this.validators.map(
-      (validator) => validator.validate(value, context)
-    );
-    // const validationErrorResults = results.filter(({ success }) => !success);
+  validate(field: FieldController, context: ValidationContext) {
+    this.validators.forEach((validator) => validator.validate(field, context));
   }
 }
