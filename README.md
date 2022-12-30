@@ -31,17 +31,17 @@ You can write your HTML forms as usual, adding your new controllers like you nor
 
 ```html
 <form data-controller="form" data-form-field-outlet=".field">
-	<div
-		class="field"
-		data-controller="field"
-		data-field-validations-value="required"
-		data-field-error-class="field-error"
-	>
-		<input name="field_name" data-field-target="input" data-action="blur->field#validate">
-		<div data-field-target="error"></div>
-	</div>
+  <div
+    class="field"
+    data-controller="field"
+    data-field-validations-value="required"
+    data-field-error-class="field-error"
+  >
+    <input name="field_name" data-field-target="input" data-action="blur->field#validate">
+    <div data-field-target="error"></div>
+  </div>
 
-	<button type="submit" data-action="form#submit">Send</button>
+  <button type="submit" data-action="form#submit">Send</button>
 </form>
 ```
 ### Fields
@@ -102,26 +102,26 @@ import type { Validator, ValidatorConstructor } from 'stimulus_form';
 // The Validator interface specifies only one method `validate` that has the signature:
 // validate(field: FieldController, validationContext: ValidationContext)
 class MinAgeValidator implements Validator {
-	age: string;
+  age: string;
 
-	// The ValidatorConstructor interface specifies your custom validator interface,
-	// which must receive a string as argument, the options you specify after the semicolon
-	// e.g with a identifer `age:16`
-	constructor(options: string) {
-		this.age = Number(options);
-	}
-	
-	// The validate method needs to add an error to the given field in order to
-	// mark it as invalid. The `FieldController` has an `errors` attribute where
-	// you can add a new error just like the example below.
-	validate(field: FieldControler, _validationContext: ValidationContext) {
-		const currentDateYear = new Date().getFullYear();
-		const fieldDateYear = new Date(field.value).getFullYear();
+  // The ValidatorConstructor interface specifies your custom validator interface,
+  // which must receive a string as argument, the options you specify after the semicolon
+  // e.g with a identifer `age:16`
+  constructor(options: string) {
+    this.age = Number(options);
+  }
 
-		if ((currentDateYear - fieldDateYear) < this.age) {
-			field.errors.add('invalid');
-		}
-	}
+  // The validate method needs to add an error to the given field in order to
+  // mark it as invalid. The `FieldController` has an `errors` attribute where
+  // you can add a new error just like the example below.
+  validate(field: FieldControler, _validationContext: ValidationContext) {
+    const currentDateYear = new Date().getFullYear();
+    const fieldDateYear = new Date(field.value).getFullYear();
+
+    if ((currentDateYear - fieldDateYear) < this.age) {
+      field.errors.add('invalid');
+    }
+  }
 }
 
 validatorRegistry.add('age', MinAgeValidator);
