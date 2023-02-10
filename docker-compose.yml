@@ -17,3 +17,11 @@ services:
     <<: *common
     stdin_open: true
     tty: true
+    ports:
+      - '3030:3030'
+
+  vite:
+    <<: *common
+    command: bash -c "cd cypress_app && yarn dev"
+    ports:
+      - '3636:3636'

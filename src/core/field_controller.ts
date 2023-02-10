@@ -1,24 +1,29 @@
 import { Controller } from '@hotwired/stimulus';
-import FormController from './form_controller';
-import ValidatorSet from './validator_set';
-import ValidationError from './validation_error';
+import { FormController } from './form_controller';
+import { ValidatorSet } from './validator_set';
+import { FieldErrors } from './field_errors';
 
-import type { InputElement } from './types';
+export type InputTargetElement = HTMLInputElement |
+  HTMLSelectElement |
+  HTMLTextAreaElement;
 
-export default class FieldController extends Controller {
+export class FieldController extends Controller<HTMLElement> {
   static targets = ['input', 'error'];
+  static values = { validations: String };
+  static classes = ['error'];
 
-  declare formController: FormController;
-  declare errors: ValidationError[];
-  declare validatorSet: ValidatorSet
-  declare readonly hasInputTarget: boolean;
-  declare readonly inputTarget: InputElement;
+  declare readonly inputTarget: InputTargetElement;
   declare readonly errorTarget: Element;
+  declare readonly validationsValue: string;
+  declare readonly errorClasses: string[];
 
-  connected() {
-    // this.validators = ValidatorBuilder.buildFromString(this.inputValidations);
-    this.validatorSet = ValidatorSet.buildFromString(this.inputValidations);
-    this.errors = []
+  declare form: FormController;
+  declare errors: FieldErrors;
+  declare validatorSet: ValidatorSet
+
+  connect() {
+    this.validatorSet = ValidatorSet.buildFromString(this.validationsValue);
+    this.errors = new FieldErrors();
   }
 
   get isValid() {
@@ -27,48 +32,37 @@ export default class FieldController extends Controller {
     return !this.hasErrors;
   }
 
+  get name() {
+    return this.inputTarget.name;
+  }
+
   get value() {
     return this.inputTarget.value;
   }
 
   get hasErrors() {
-    return this.errors.length === 0;
+    return !this.errors.isEmpty;
   }
 
   validate() {
-    this.clearErrors();
+    this.errors.clear();
 
-    const results = this.validatorSet.validate(this.value, this.validationContext);
-    const errorResults = results.filter(({ success }) => !success);
+    this.validatorSet.validate(this, this.form.validationContext);
 
-    this.errors = errorResults.map(({ error }) => error);
-
-    this.applyDocumentChanges();
+    this.applyChanges();
   }
 
-  private get inputValidations() {
-    return this.inputTarget.dataset.validations || '';
-  }
-
-  private applyDocumentChanges() {
+  private applyChanges() {
     this.hasErrors ? this.applyErrorChanges() : this.applySuccessChanges();
   }
 
   private applySuccessChanges() {
-    this.element.classList.remove('validation-error');
+    this.element.classList.remove(...this.errorClasses);
     this.errorTarget.textContent = '';
   }
 
   private applyErrorChanges() {
-    this.element.classList.add('validation-error');
-    this.errorTarget.textContent = this.errors[0].message;
-  }
-
-  private clearErrors() {
-    this.errors = [];
-  }
-
-  private get validationContext() {
-    return this.formController.validationContext;
+    this.element.classList.add(...this.errorClasses);
+    this.errorTarget.textContent = this.errors.fullMessage;
   }
 }

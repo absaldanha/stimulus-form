@@ -1,0 +1,22 @@
+{
+  "name": "@absaldanha/stimulus_form_example",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": "Alexandre Saldanha",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/absaldanha/stimulus-form.git"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@hotwired/stimulus": ">= 3.2",
+    "stimulus-form": "file:./../dist"
+  },
+  "devDependencies": {
+    "tiny-glob": "^0.2.9",
+    "vite": "^4.0.3"
+  }
+}

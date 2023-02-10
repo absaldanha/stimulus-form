@@ -1,8 +1,8 @@
-// import { UnknownIdentifierError } from './errors';
+import { UnknownValidatorError } from './errors';
 
-import type { ValidatorConstructor } from './types';
+import type { ValidatorConstructor } from './validators';
 
-export default class ValidatorRegistry {
+export class ValidatorRegistry {
   private map: Map<string, ValidatorConstructor>;
 
   constructor() {
@@ -14,11 +14,12 @@ export default class ValidatorRegistry {
   }
 
   fetch(identifier: string): ValidatorConstructor {
-    if (this.map.has(identifier)) {
-      return this.map.get(identifier)!;
+    const Validator = this.map.get(identifier);
+
+    if (!Validator) {
+      throw new UnknownValidatorError(identifier);
     }
 
-    // throw new UnknownIdentifierError(identifier);
-    throw new Error();
+    return Validator;
   }
 }

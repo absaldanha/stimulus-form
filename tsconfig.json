@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [ "dom", "dom.iterable", "es2015", "scripthost" ],
+    "lib": [ "dom", "dom.iterable", "es2017", "scripthost" ],
     "module": "es2015",
     "moduleResolution": "node",
     "noUnusedLocals": true,
@@ -11,7 +11,9 @@
     "outDir": "dist",
     "baseUrl": ".",
     "noEmit": false,
-    "declaration": false
+    "declaration": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
   "exclude": [
     "dist"

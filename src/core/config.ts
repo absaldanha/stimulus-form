@@ -1,18 +1,5 @@
-import ValidatorRegistry from './validator_registry';
+import { ValidatorRegistry } from './validator_registry';
+import { ErrorMessages } from './error_messages';
 
-class Config {
-  private _errorElementClass: string = '.error-message';
-  public validatorRegistry = new ValidatorRegistry();
-
-  get errorElementClass() {
-    return this._errorElementClass;
-  }
-
-  set errorElementClass(newValue: string) {
-    this._errorElementClass = newValue
-  }
-}
-
-const config = new Config();
-
-export default config;
+export const validatorRegistry = new ValidatorRegistry();
+export const errorMessages = ErrorMessages.loadWithDefaults();
