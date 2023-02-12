@@ -6,11 +6,15 @@ import json from '@rollup/plugin-json';
 export default [
   {
     input: 'src/index.js',
+    external: ['@hotwired/stimulus'],
     output: [
       {
         name: 'Stimulus Form',
         file: 'dist/stimulus_form.umd.js',
-        format: 'umd'
+        format: 'umd',
+        globals: {
+          '@hotwired/stimulus': 'Stimulus'
+        }
       },
       {
         file: 'dist/stimulus_form.js',
@@ -26,10 +30,14 @@ export default [
   },
   {
     input: 'src/index.js',
+    external: ['@hotwired/stimulus'],
     output: {
       file: 'dist/stimulus_form.min.js',
       format: 'es',
-      sourcemap: true
+      sourcemap: true,
+      globals: {
+        '@hotwired/stimulus': 'Stimulus'
+      }
     },
     context: 'window',
     plugins: [
