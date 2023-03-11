@@ -4,7 +4,7 @@ import { FieldController } from '../../../src/core/field_controller';
 import { ValidationContext } from '../../../src/core/validation_context';
 import { FieldErrors } from '../../../src/core/field_errors';
 
-const EMAIL_REGEXP = /\A[a-zA-Z0-9.!\#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\z/;
+const EMAIL_REGEXP = /^[a-zA-Z0-9.!\#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 const validationContext = {} as jest.Mocked<Partial<ValidationContext>> as ValidationContext;
 
@@ -59,6 +59,33 @@ describe('FormatValidator', () => {
       validator.validate(field, validationContext);
 
       expect(fieldErrorsAdd).not.toHaveBeenCalled();
+    });
+
+    test('email regex matches correctly', () => {
+      const validator = new FormatValidator('email');
+
+      const field = {
+        value: 'test.mail@mail.com',
+        errors: fieldErrors
+      } as jest.Mocked<Partial<FieldController>> as FieldController;
+
+      validator.validate(field, validationContext);
+
+      expect(fieldErrorsAdd).not.toHaveBeenCalled();
+    });
+
+    test('email regex adds error correctly', () => {
+      const validator = new FormatValidator('email');
+
+      const field = {
+        value: 'something.iswrong@',
+        errors: fieldErrors
+      } as jest.Mocked<Partial<FieldController>> as FieldController;
+
+      validator.validate(field, validationContext);
+
+      expect(fieldErrorsAdd).toHaveBeenCalledTimes(1);
+      expect(fieldErrorsAdd).toHaveBeenCalledWith('invalid');
     });
   });
 });
