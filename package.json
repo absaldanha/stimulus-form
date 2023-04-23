@@ -22,7 +22,7 @@
     "dev:install": "cd cypress_app && yarn install",
     "dev": "cd cypress_app && yarn vite",
     "test": "jest",
-    "test:cypress": "cypress run",
+    "test:cypress": "cypress run --quiet",
     "prerelease": "yarn build && npm pack --dry-run",
     "release": "yarn publish --access=public"
   },
