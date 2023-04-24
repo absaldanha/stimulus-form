@@ -14,7 +14,7 @@ describe('ErrorMessages', () => {
       expect(errorMessages.translate('invalid')).toEqual('is invalid');
       expect(errorMessages.translate('greater_than_or_equal_to', { value: 1 })).toEqual('must be greater than or equal to 1');
       expect(errorMessages.translate('greater_than', { value: 1 })).toEqual('must be greater than 1');
-      expect(errorMessages.translate('wrong_length', { value: 1 })).toEqual('is the wrong length (maximum is 1 character(s)');
+      expect(errorMessages.translate('wrong_length', { value: 1 })).toEqual('is the wrong length (should be 1 character(s))');
       expect(errorMessages.translate('less_than_or_equal_to', { value: 1 })).toEqual('must be less than or equal to 1');
       expect(errorMessages.translate('less_than', { value: 1 })).toEqual('must be less than 1');
       expect(errorMessages.translate('too_long', { value: 1 })).toEqual('is too long (maximum is 1 character(s))');
@@ -29,7 +29,7 @@ describe('ErrorMessages', () => {
       expect(errorMessages.translate('invalid')).toEqual('não é válido');
       expect(errorMessages.translate('greater_than_or_equal_to', { value: 1 })).toEqual('deve ser maior ou igual a 1');
       expect(errorMessages.translate('greater_than', { value: 1 })).toEqual('deve ser maior que 1');
-      expect(errorMessages.translate('wrong_length', { value: 1 })).toEqual('não possui o tamanho esperado (máximo: 1 caracter(es))');
+      expect(errorMessages.translate('wrong_length', { value: 1 })).toEqual('não possui o tamanho esperado (1 caracter(es))');
       expect(errorMessages.translate('less_than_or_equal_to', { value: 1 })).toEqual('deve ser menor ou igual a 1');
       expect(errorMessages.translate('less_than', { value: 1 })).toEqual('deve ser menor que 1');
       expect(errorMessages.translate('too_long', { value: 1 })).toEqual('é muito longo (máximo: 1 caracter(es))');
