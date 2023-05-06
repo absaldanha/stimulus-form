@@ -24,6 +24,10 @@ export class FormSubmitObserver {
   }
 
   submitListener = <EventListener>((event: SubmitEvent) => {
+    this.form.fieldOutlets.forEach((field) => {
+      field.touch();
+    });
+
     if (!this.form.validate()) {
       event.preventDefault();
     }

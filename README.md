@@ -24,24 +24,28 @@ app.register('form', FormController);
 
 This library is composed of two Stimulus controllers designed to work with your forms:
 
-- `FormController`: is the "coordinator" controller, responsible for orchestrating the validation of all the form fields before an submission, preventing it if there are invalid fields. It's controller action is `submit`, usually added to the form submit button.
-- `FieldController`: the individual field controller, responsible for the field validations. It is automatically registered with the `field` identifier when `FormController` is registered. It's controller action is `validate`, usually added as response to events related to the input, such as the blur event.
+- `FormController`: is the "coordinator" controller, responsible for orchestrating the validation of all the form fields before a submission, preventing it if there are invalid fields.
+- `FieldController`: the individual field controller, responsible for the field validations. It is automatically registered with the `field` identifier when `FormController` is registered.
 
 You can write your HTML forms as usual, adding your new controllers like you normally do with any Stimulus controller:
 
 ```html
-<form data-controller="form" data-form-field-outlet=".field">
+<form
+  data-controller="form"
+  data-form-field-outlet=".field"
+  data-form-validation-strategy-value="touch"
+>
   <div
     class="field"
     data-controller="field"
     data-field-validations-value="required"
     data-field-error-class="field-error"
   >
-    <input name="field_name" data-field-target="input" data-action="blur->field#validate">
+    <input name="field_name" data-field-target="input">
     <div data-field-target="error"></div>
   </div>
 
-  <button type="submit" data-action="form#submit">Send</button>
+  <button type="submit">Send</button>
 </form>
 ```
 ### Fields
@@ -63,12 +67,18 @@ There are two `FieldController` targets, using the `data-field-target` attribute
 
 There are two controller actions that you can use on your form in order to trigger its validation behavior:
 
-- `FormController#submit`: its the action that will validate your entire form, preventing its submission in case any field validation fails.
+- `FormController#validate`: its the action that will validate your entire form, preventing its submission in case any field validation fails.
 - `FieldController#validate`: its the action that will validate an individual field against the specified validations. It will automatically mark the field as invalid and show any validation error to your user.
 
 ### Error Class
 
 When an field is marked as invalid, you can configure which CSS classes will be added to the field element. You can configure it with the `data-field-error-class` attribute, and it accepts an space-separated list of classes that will be toggled when a field is valid or invalid.
+
+### Validation Strategy
+
+There are two avaliable validation strategies:
+- `submit` (default): validate all fields when the form is submitted;
+- `touch`: validate a field on every input, after it's been _touched_, that is, after it has received at least one `blur` event, or after the form has been submitted.
 
 ## Validators
 

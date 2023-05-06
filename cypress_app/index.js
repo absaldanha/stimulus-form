@@ -6,8 +6,3 @@ application.debug = true;
 window.Stimulus = application;
 
 application.register('form', FormController);
-
-window.submitSuccessfull = function submitSuccessfull(event) {
-  event.preventDefault();
-  alert('Submit successfull');
-}
