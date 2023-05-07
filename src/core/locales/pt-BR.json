@@ -4,7 +4,7 @@
   "invalid": "não é válido",
   "greater_than_or_equal_to": "deve ser maior ou igual a %{value}",
   "greater_than": "deve ser maior que %{value}",
-  "wrong_length": "não possui o tamanho esperado (máximo: %{value} caracter(es))",
+  "wrong_length": "não possui o tamanho esperado (%{value} caracter(es))",
   "less_than_or_equal_to": "deve ser menor ou igual a %{value}",
   "less_than": "deve ser menor que %{value}",
   "too_long": "é muito longo (máximo: %{value} caracter(es))",

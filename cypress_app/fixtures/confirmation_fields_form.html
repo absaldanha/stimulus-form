@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+  </head>
+  <body>
+    <div>
+      <form action="/" onsubmit="submitSuccessfull(event)" method="post" data-controller="form" data-form-field-outlet=".form-field">
+        <div
+          class="form-field"
+          data-controller="field"
+          data-field-validations-value=""
+          data-field-error-class="field-error"
+        >
+          <label for="test_source">Test Source</label>
+          <input id="test_source" name="test_source" type="text" data-field-target="input" data-action="blur->field#validate">
+          <div data-field-target="error" data-testid="test_source"></div>
+        </div>
+
+        <div
+          class="form-field"
+          data-controller="field"
+          data-field-validations-value="confirmation:test_source"
+          data-field-error-class="field-error"
+        >
+          <label for="test_confirmation">Test Confirmation</label>
+          <input id="test_confirmation" name="test_confirmation" type="text" data-field-target="input" data-action="blur->field#validate">
+          <div data-field-target="error" data-testid="test_confirmation"></div>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+      <script type="module" src="../index.js"></script>
+    </div>
+  </body>
+</html>

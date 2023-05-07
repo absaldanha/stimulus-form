@@ -1,9 +1,9 @@
-describe('Required fields Form', () => {
+describe('Required validator fields', () => {
   beforeEach(() => {
     cy.visit('http://vite:3636/fixtures/required_fields_form.html');
   });
 
-  it('Prevents form submit when any field is invalid', () => {
+  it('Prevents form submission when fields are blank', () => {
     cy.contains('Submit').click();
 
     cy.get('[data-testid="first_name_error"]').should('have.text', "Can't be blank");
