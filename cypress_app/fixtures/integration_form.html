@@ -5,7 +5,7 @@
   </head>
   <body>
     <div>
-      <form action="/" onsubmit="submitSuccessfull(event)" method="post" data-controller="form" data-form-field-outlet=".form-field">
+      <form action="/action.html" method="post" data-controller="form" data-form-field-outlet=".form-field">
         <div
           class="form-field"
           data-controller="field"
@@ -16,7 +16,7 @@
           <input id="first_name" name="first_name" type="text" data-field-target="input" data-action="blur->field#validate">
           <div data-field-target="error" data-testid="first_name_error"></div>
         </div>
-    
+
         <div
           class="form-field"
           data-controller="field"

@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 import { FormController } from './form_controller';
 import { ValidatorSet } from './validator_set';
 import { FieldErrors } from './field_errors';
-import { FieldTouchObserver } from './observers';
+import { FieldObserver } from './observers';
 
 export type InputTargetElement = HTMLInputElement |
   HTMLSelectElement |
@@ -23,18 +23,18 @@ export class FieldController extends Controller<HTMLElement> {
   declare validatorSet: ValidatorSet;
   declare touched: boolean;
 
-  readonly fieldTouchObserver: FieldTouchObserver = new FieldTouchObserver(this);
+  readonly fieldObserver: FieldObserver = new FieldObserver(this);
 
   connect() {
     this.validatorSet = ValidatorSet.buildFromString(this.validationsValue);
     this.errors = new FieldErrors();
     this.touched = false;
 
-    this.fieldTouchObserver.start();
+    this.fieldObserver.start();
   }
 
   disconnect() {
-    this.fieldTouchObserver.stop();
+    this.fieldObserver.stop();
   }
 
   get isValid() {
@@ -60,6 +60,8 @@ export class FieldController extends Controller<HTMLElement> {
   }
 
   validate() {
+    this.application.logDebugActivity('field', 'validate');
+
     this.errors.clear();
 
     this.validatorSet.validate(this, this.form.validationContext);

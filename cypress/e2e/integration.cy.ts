@@ -4,9 +4,6 @@ describe('Integration Form', () => {
   });
 
   it('Sends the form when all fields are correctly filled', () => {
-    const alertStub = cy.stub();
-    cy.on('window:alert', alertStub);
-
     cy.get("#first_name").type('Joe');
     cy.get("#last_name").type('Doe');
     cy.get("#age").type('20');
@@ -17,10 +14,7 @@ describe('Integration Form', () => {
     cy.get("#password_confirmation").type('verystrongandlongpassword');
     cy.get("#captcha").type('captcha');
 
-    cy.contains('Submit')
-      .click()
-      .then(() => {
-        expect(alertStub.getCall(0)).to.be.calledWith('Submit successfull')
-      });
+    cy.contains('Submit').click();
+    cy.contains('Form was submitted');
   });
 });

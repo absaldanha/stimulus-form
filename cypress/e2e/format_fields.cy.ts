@@ -16,16 +16,9 @@ describe('Format validator fields', () => {
   });
 
   it('Submits the form when all fields are in the correct format', () => {
-    const alertStub = cy.stub();
-
-    cy.on('window:alert', alertStub);
-
     cy.get('#test_regex').type('bar-something-something-foo');
     cy.get('#test_email').type('foo.bar@mail.com');
-    cy.contains('Submit')
-      .click()
-      .then(() => {
-        expect(alertStub.getCall(0)).to.be.calledWith('Submit successfull')
-      });
+    cy.contains('Submit').click();
+    cy.contains('Form was submitted');
   });
 });

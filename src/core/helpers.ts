@@ -39,3 +39,15 @@ export function isNumber(value: unknown): value is number {
 export function capitalize(value: string) {
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
+
+export function debounce(fn: Function, wait: number = 200) {
+  let timeoutId: number;
+
+  return function(): any {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(fn, wait);
+  }
+}

@@ -1,6 +1,6 @@
 import { FormController } from '../form_controller';
 
-export class FormSubmitObserver {
+export class FormObserver {
   readonly form: FormController;
   private started: boolean
 
@@ -24,10 +24,6 @@ export class FormSubmitObserver {
   }
 
   submitListener = <EventListener>((event: SubmitEvent) => {
-    this.form.fieldOutlets.forEach((field) => {
-      field.touch();
-    });
-
     if (!this.form.validate()) {
       event.preventDefault();
     }

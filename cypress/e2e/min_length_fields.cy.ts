@@ -10,16 +10,9 @@ describe('Min Length validator fields', () => {
   });
 
   it('Submits the form when fields are filled with correct length', () => {
-    const alertStub = cy.stub();
-
-    cy.on('window:alert', alertStub);
-
     cy.get('#test').type('abcdefghijklmn');
 
-    cy.contains('Submit')
-      .click()
-      .then(() => {
-        expect(alertStub.getCall(0)).to.be.calledWith('Submit successfull')
-      });
+    cy.contains('Submit').click();
+    cy.contains('Form was submitted');
   });
 });

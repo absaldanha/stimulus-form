@@ -10,15 +10,8 @@ describe('Not Equal validator fields', () => {
   });
 
   it('Submits the form when fields are not equal to the given value', () => {
-    const alertStub = cy.stub();
-
-    cy.on('window:alert', alertStub);
-
     cy.get('#test').type('something different');
-    cy.contains('Submit')
-      .click()
-      .then(() => {
-        expect(alertStub.getCall(0)).to.be.calledWith('Submit successfull')
-      });
+    cy.contains('Submit').click();
+    cy.contains('Form was submitted');
   });
 });

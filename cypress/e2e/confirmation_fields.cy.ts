@@ -11,16 +11,9 @@ describe('Confirmation validator fields', () => {
   });
 
   it('Submits the form when all field is equal to the other field', () => {
-    const alertStub = cy.stub();
-
-    cy.on('window:alert', alertStub);
-
     cy.get('#test_source').type('something');
     cy.get('#test_confirmation').type('something');
-    cy.contains('Submit')
-      .click()
-      .then(() => {
-        expect(alertStub.getCall(0)).to.be.calledWith('Submit successfull')
-      });
+    cy.contains('Submit').click();
+    cy.contains('Form was submitted');
   });
 });

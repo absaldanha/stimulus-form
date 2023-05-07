@@ -5,13 +5,7 @@
   </head>
   <body>
     <div>
-      <form
-        action="/action.html"
-        method="post"
-        data-controller="form"
-        data-form-field-outlet=".form-field"
-        data-form-validation-strategy-value="touch"
-      >
+      <form action="/action.html" method="post" data-controller="form" data-form-field-outlet=".form-field">
         <div
           class="form-field"
           data-controller="field"
@@ -19,7 +13,7 @@
           data-field-error-class="field-error"
         >
           <label for="first_name">First Name</label>
-          <input id="first_name" name="first_name" type="text" data-field-target="input">
+          <input id="first_name" name="first_name" type="text" data-field-target="input" data-action="blur->field#validate">
           <div data-field-target="error" data-testid="first_name_error"></div>
         </div>
 
@@ -30,7 +24,7 @@
           data-field-error-class="field-error"
         >
           <label for="last_name">Last Name</label>
-          <input id="last_name" name="last_name" type="text" data-field-target="input">
+          <input id="last_name" name="last_name" type="text" data-field-target="input" data-action="blur->field#validate">
           <div data-field-target="error" data-testid="last_name_error"></div>
         </div>
         <button type="submit">Submit</button>

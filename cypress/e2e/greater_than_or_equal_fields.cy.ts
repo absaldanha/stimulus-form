@@ -16,17 +16,10 @@ describe('Greater Than Or Equal validator fields', () => {
   });
 
   it('Submits the form when fields are greater than or equal the given value', () => {
-    const alertStub = cy.stub();
-
-    cy.on('window:alert', alertStub);
-
     cy.get('#test_text').type('10');
     cy.get('#test_number').type('12');
 
-    cy.contains('Submit')
-      .click()
-      .then(() => {
-        expect(alertStub.getCall(0)).to.be.calledWith('Submit successfull')
-      });
+    cy.contains('Submit').click();
+    cy.contains('Form was submitted');
   });
 });
