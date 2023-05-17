@@ -25,7 +25,7 @@ export class FormController extends Controller<HTMLFormElement> {
     this.formSubmitObserver.stop();
   }
 
-  fieldOutletConnected(outlet: FieldController, _element: Element) {
+  fieldOutletConnected(outlet: FieldController) {
     outlet.form = this;
   }
 

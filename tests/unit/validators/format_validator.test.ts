@@ -4,7 +4,7 @@ import { FieldController } from '../../../src/core/field_controller';
 import { ValidationContext } from '../../../src/core/validation_context';
 import { FieldErrors } from '../../../src/core/field_errors';
 
-const EMAIL_REGEXP = /^[a-zA-Z0-9.!\#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+const EMAIL_REGEXP = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 const validationContext = {} as jest.Mocked<Partial<ValidationContext>> as ValidationContext;
 

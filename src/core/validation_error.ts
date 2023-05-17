@@ -8,7 +8,7 @@ export class ValidationError {
   readonly type: string;
   readonly extras: ValidationErrorExtras;
 
-  constructor(type: string = 'invalid', extras: ValidationErrorExtras = {}) {
+  constructor(type = 'invalid', extras: ValidationErrorExtras = {}) {
     this.type = type;
     this.extras = extras;
   }
