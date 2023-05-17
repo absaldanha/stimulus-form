@@ -1,7 +1,8 @@
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
-// import terser from '@rollup/plugin-terser';
+import terser from '@rollup/plugin-terser';
 import json from '@rollup/plugin-json';
+import filesize from 'rollup-plugin-filesize';
 
 export default [
   {
@@ -25,7 +26,9 @@ export default [
     plugins: [
       resolve(),
       json(),
-      typescript()
+      typescript(),
+      terser(),
+      filesize()
     ]
   },
   {
@@ -42,12 +45,10 @@ export default [
     context: 'window',
     plugins: [
       resolve(),
-      typescript(),
       json(),
-      // terser({
-      //   mangle: true,
-      //   compress: true
-      // })
+      typescript(),
+      terser(),
+      filesize()
     ]
   }
 ]
