@@ -2,11 +2,11 @@ type FalsyValue = false | '' | null | undefined;
 
 const BLANK_REGEX = /^\s*$/;
 
-export function isFalsy(value: any): value is FalsyValue {
+export function isFalsy(value: unknown): value is FalsyValue {
   return value !== 0 && !value;
 }
 
-export function isBlank(value: any) {
+export function isBlank(value: unknown) {
   if (isFalsy(value)) {
     return true;
   }
@@ -18,16 +18,16 @@ export function isBlank(value: any) {
   return false;
 }
 
-export function isPresent(value: any) {
+export function isPresent(value: unknown) {
   return !isBlank(value);
 }
 
-export function isNumber(value: any): value is number {
+export function isNumber(value: unknown): value is number {
   if (isFalsy(value)) {
     return false;
   }
 
-  const stringValue = value.toString();
+  const stringValue = String(value);
 
   if (stringValue === '') {
     return false;
