@@ -14,6 +14,7 @@ export class FormController extends Controller<HTMLFormElement> {
 
   declare readonly fieldOutlets: FieldController[];
   declare readonly validationStrategyValue: ValidationStrategy;
+  declare submitted: boolean;
 
   readonly validationContext: ValidationContext = new ValidationContext(this);
   readonly formObserver: FormObserver = new FormObserver(this);
@@ -24,6 +25,7 @@ export class FormController extends Controller<HTMLFormElement> {
 
   connect() {
     this.formObserver.start();
+    this.submitted = false;
   }
 
   disconnect() {

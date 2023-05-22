@@ -27,5 +27,7 @@ export class FormObserver {
     if (!this.form.validate()) {
       event.preventDefault();
     }
+
+    this.form.submitted = true;
   });
 }

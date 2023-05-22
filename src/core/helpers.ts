@@ -40,14 +40,14 @@ export function capitalize(value: string) {
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
-export function debounce(fn: Function, wait: number = 200) {
-  let timeoutId: number;
+export function debounce<F extends (...args: Parameters<F>) => ReturnType<F>>(
+  fn: F,
+  wait: number = 200,
+): (...args: Parameters<F>) => void {
+  let timeoutId: ReturnType<typeof setTimeout>;
 
-  return function(): any {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-
-    timeoutId = setTimeout(fn, wait);
-  }
+  return (...args: Parameters<F>): void => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn(...args), wait);
+  };
 }

@@ -1,4 +1,4 @@
-import { FormController } from "./form_controller";
+import { FormController } from './form_controller';
 
 export class ValidationContext {
   private form: FormController;

@@ -1,44 +1,51 @@
 import { FieldController } from '../field_controller';
+import {
+  DefaultObserver,
+  BlurStrategyObserver,
+  SubmitStrategyObserver,
+  TouchStrategyObserver
+} from './field';
 import { ValidationStrategy } from '../validation_strategy';
-import { BlurObserver, InputObserver, SubmitObserver } from './field';
+
+import type { StrategyObserverConstructor, StrategyObserver } from './field/strategy_observers';
 
 export class FieldObserver {
   readonly field: FieldController;
-  readonly blurObserver: BlurObserver;
-  readonly inputObserver: InputObserver;
-  readonly submitObserver: SubmitObserver;
-
-  private started: boolean
+  readonly strategyObserver: StrategyObserver;
+  readonly defaultObserver: DefaultObserver;
 
   constructor(field: FieldController) {
     this.field = field;
-    this.started = false;
 
-    this.blurObserver = new BlurObserver(field);
-    this.inputObserver = new InputObserver(field);
-    this.submitObserver = new SubmitObserver(field);
+    this.defaultObserver = new DefaultObserver(this.field);
+    this.strategyObserver = this.fetchStrategyObserver();
   }
 
   start() {
-    if (!this.started) {
-      if (this.field.validationStrategy === ValidationStrategy.Touch) {
-        this.blurObserver.start();
-        this.inputObserver.start();
-      }
-
-      this.submitObserver.start();
-
-      this.started = true;
-    }
+    this.defaultObserver.start();
+    this.strategyObserver.start();
   }
 
   stop() {
-    if (this.started) {
-      this.blurObserver.stop();
-      this.inputObserver.stop();
-      this.submitObserver.stop();
+    this.defaultObserver.stop();
+    this.strategyObserver.stop();
+  }
 
-      this.started = false;
+  private fetchStrategyObserver() {
+    let StrategyObserver: StrategyObserverConstructor;
+
+    if (this.validationStrategy === ValidationStrategy.Blur) {
+      StrategyObserver = BlurStrategyObserver;
+    } else if (this.validationStrategy === ValidationStrategy.Touch) {
+      StrategyObserver = TouchStrategyObserver;
+    } else {
+      StrategyObserver = SubmitStrategyObserver;
     }
+
+    return new StrategyObserver(this.field);
+  }
+
+  private get validationStrategy() {
+    return this.field.validationStrategy;
   }
 }

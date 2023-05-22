@@ -1,4 +1,5 @@
 export enum ValidationStrategy {
   Submit = 'submit',
-  Touch = 'touch'
+  Touch = 'touch',
+  Blur = 'blur'
 };

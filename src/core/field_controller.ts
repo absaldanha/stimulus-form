@@ -60,8 +60,6 @@ export class FieldController extends Controller<HTMLElement> {
   }
 
   validate() {
-    this.application.logDebugActivity('field', 'validate');
-
     this.errors.clear();
 
     this.validatorSet.validate(this, this.form.validationContext);
