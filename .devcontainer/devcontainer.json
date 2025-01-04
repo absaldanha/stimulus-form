@@ -1,0 +1,29 @@
+{
+    "name": "stimulus-form",
+    "dockerComposeFile": "compose.yaml",
+    "service": "app",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    "forwardPorts": [
+      3000,
+      5432,
+      6379,
+      3036,
+      3037
+    ],
+    "customizations": {
+      "vscode": {
+        "settings": {
+          "editor.tabSize": 2,
+          "editor.renderWhitespace": "all",
+          "editor.snippetSuggestions": "top",
+          "files.insertFinalNewline": true,
+          "editor.rulers": [
+            80,
+            100,
+            120
+          ],
+          "emmet.showSuggestionsAsSnippets": true
+        }
+      }
+    }
+  }
