@@ -12,3 +12,13 @@ services:
       - default
     ports:
       - 3030:3030
+    depends_on:
+      - selenium
+
+  selenium:
+    image: selenium/standalone-chromium
+    restart: unless-stopped
+    command: sleep infinity
+    ports:
+      - 4444:4444
+    shm_size: 2g
