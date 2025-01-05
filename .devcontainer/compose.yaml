@@ -11,6 +11,4 @@ services:
     networks:
       - default
     ports:
-      - 45678:45678
-      - 3036:3036
-      - 3037:3037
+      - 3030:3030

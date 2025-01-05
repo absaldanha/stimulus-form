@@ -1,7 +1,7 @@
-export { FormController } from './form_controller';
-export { FieldController } from './field_controller';
-export { ValidatorConstructor, Validator } from './validators';
-export { ValidationContext } from './validation_context';
-export { validatorRegistry, errorMessages } from './config';
-
-export type { InputTargetElement } from './field_controller';
+export { FormController } from "./form_controller";
+export { FieldController } from "./field_controller";
+export { MessageController } from "./message_controller"
+export {
+  default as validityMatchers,
+  type ValidityMatcher, ValidityMatcherRegistry
+} from "./validity_matchers"

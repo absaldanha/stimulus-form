@@ -1,68 +1,51 @@
-import { Controller } from '@hotwired/stimulus';
-import { FormController } from './form_controller';
-import { ValidatorSet } from './validator_set';
-import { FieldErrors } from './field_errors';
+import { Controller } from "@hotwired/stimulus"
+import { MessageController } from "./message_controller"
 
-export type InputTargetElement = HTMLInputElement |
+type FieldInputTargetElement = HTMLInputElement |
   HTMLSelectElement |
-  HTMLTextAreaElement;
+  HTMLTextAreaElement
 
-export class FieldController extends Controller<HTMLElement> {
-  static targets = ['input', 'error'];
-  static values = { validations: String };
-  static classes = ['error'];
+export class FieldController extends Controller {
+  static targets = ["input"]
+  static outlets = ["message"]
 
-  declare readonly inputTarget: InputTargetElement;
-  declare readonly errorTarget: Element;
-  declare readonly validationsValue: string;
-  declare readonly errorClasses: string[];
+  declare readonly inputTarget: FieldInputTargetElement
+  declare readonly messageOutlets: MessageController[]
 
-  declare form: FormController;
-  declare errors: FieldErrors;
-  declare validatorSet: ValidatorSet
+  validate() {
+    this.showMessages()
+    this.#updateInputValidAttribute()
 
-  connect() {
-    this.validatorSet = ValidatorSet.buildFromString(this.validationsValue);
-    this.errors = new FieldErrors();
+    return this.isValid
+  }
+
+  showMessages() {
+    const formData = this.inputTarget.form ? new FormData(this.inputTarget.form) : new FormData()
+
+    this.messageOutlets.forEach((message) => {
+      if (message.match(this.validity, this.inputTarget.value, formData)) {
+        message.show()
+      } else {
+        message.hide()
+      }
+    })
+  }
+
+  get validity() {
+    return this.inputTarget.validity
   }
 
   get isValid() {
-    this.validate();
-
-    return !this.hasErrors;
+    return this.validity.valid
   }
 
-  get name() {
-    return this.inputTarget.name;
-  }
-
-  get value() {
-    return this.inputTarget.value;
-  }
-
-  get hasErrors() {
-    return !this.errors.isEmpty;
-  }
-
-  validate() {
-    this.errors.clear();
-
-    this.validatorSet.validate(this, this.form.validationContext);
-
-    this.applyChanges();
-  }
-
-  private applyChanges() {
-    this.hasErrors ? this.applyErrorChanges() : this.applySuccessChanges();
-  }
-
-  private applySuccessChanges() {
-    this.element.classList.remove(...this.errorClasses);
-    this.errorTarget.textContent = '';
-  }
-
-  private applyErrorChanges() {
-    this.element.classList.add(...this.errorClasses);
-    this.errorTarget.textContent = this.errors.fullMessage;
+  #updateInputValidAttribute() {
+    if (this.isValid) {
+      this.inputTarget.dataset.valid = ""
+      delete this.inputTarget.dataset.invalid
+    } else {
+      this.inputTarget.dataset.invalid = ""
+      delete this.inputTarget.dataset.valid
+    }
   }
 }
